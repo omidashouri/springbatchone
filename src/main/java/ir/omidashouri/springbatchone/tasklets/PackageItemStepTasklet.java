@@ -10,8 +10,12 @@ import org.springframework.stereotype.Component;
 public class PackageItemStepTasklet implements Tasklet {
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-        String item = chunkContext.getStepContext().getJobParameters().get("item").toString();
-        String date = chunkContext.getStepContext().getJobParameters().get("run.date").toString();
+
+        String item = "ITEM";
+        String date = "DATE";
+
+/*        item = chunkContext.getStepContext().getJobParameters().get("item").toString();
+        date = chunkContext.getStepContext().getJobParameters().get("run.date").toString();*/
 
         System.out.println(String.format("The %s has been packaged on %s",item ,date));
         return RepeatStatus.FINISHED;

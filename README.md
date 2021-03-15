@@ -93,3 +93,16 @@ CREATE SEQUENCE BATCH_JOB_EXECUTION_SEQ START WITH 0 MINVALUE 0 MAXVALUE 9223372
 CREATE SEQUENCE BATCH_JOB_SEQ START WITH 0 MINVALUE 0 MAXVALUE 9223372036854775807 NOCYCLE;
 
 #By specifying the INITRANS and MAXTRANS parameters during the creation of each table, you can affect how much space is initially and can ever be allocated for transaction entries in the data blocks of a table's data segment
+
+
+
+-------------------------------
+
+Delete from SPRING_BATCH.BATCH_STEP_EXECUTION_CONTEXT;
+Delete from SPRING_BATCH.BATCH_JOB_EXECUTION_CONTEXT;
+Delete from SPRING_BATCH.BATCH_STEP_EXECUTION;
+Delete from SPRING_BATCH.BATCH_JOB_EXECUTION;
+Delete from SPRING_BATCH.BATCH_JOB_INSTANCE;
+
+
+
