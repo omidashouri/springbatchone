@@ -1,11 +1,13 @@
 package ir.omidashouri.springbatchone.configuration;
 
+import ir.omidashouri.springbatchone.jobs.DeliveryDecider;
 import ir.omidashouri.springbatchone.tasklets.*;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.flow.JobExecutionDecider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +38,17 @@ public class JobConfiguration {
     @Autowired
     private StorePackageTasklet storePackageTasklet;
 
+    @Autowired
+    private LeaveAtDoorTasklet leaveAtDoorTasklet;
+
+
+
+
+    @Bean
+    public JobExecutionDecider jobExecutionDeliveryDecider(){
+        return new DeliveryDecider();
+    }
+
 
     @Bean
     public Step step1() {
@@ -56,10 +69,20 @@ public class JobConfiguration {
 //    ---------------------------------------
 
     @Bean
+    public Step leaveAtDoorStep(){
+        return this
+                .stepBuilderFactory
+                .get("leaveAtDoorStep")
+                .tasklet(leaveAtDoorTasklet)
+                .build();
+    }
+
+
+    @Bean
     public Step storePackageStep(){
         return this
                 .stepBuilderFactory
-                .get("storePackage")
+                .get("storePackageStep")
                 .tasklet(storePackageTasklet)
                 .build();
     }
@@ -69,7 +92,7 @@ public class JobConfiguration {
     public Step givePackageToCustomerStep(){
         return this
                 .stepBuilderFactory
-                .get("givePackageToCustomer")
+                .get("givePackageToCustomerStep")
                 .tasklet(givePackageToCustomerTasklet)
                 .build();
     }
@@ -101,11 +124,16 @@ public class JobConfiguration {
                 .jobBuilderFactory
                 .get("deliverPackageJob")
                 .start(packageItemStep())
+
                 .next(driveToAddressStep())
                     .on("FAILED").to(storePackageStep())
                 .from(driveToAddressStep())
-                    .on("*").to(givePackageToCustomerStep())
+                    .on("*").to(jobExecutionDeliveryDecider())
+                        .on("PRESENT").to(givePackageToCustomerStep())
+                    .from(jobExecutionDeliveryDecider())
+                        .on("NOT_PRESENT").to(leaveAtDoorStep())
                 .end()
+
                 .build();
     }
 
