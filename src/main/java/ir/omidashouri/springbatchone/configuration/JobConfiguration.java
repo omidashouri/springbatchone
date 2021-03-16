@@ -3,52 +3,42 @@ package ir.omidashouri.springbatchone.configuration;
 import ir.omidashouri.springbatchone.jobs.DeliveryDecider;
 import ir.omidashouri.springbatchone.jobs.GiveToCustomerCorrectItemDecider;
 import ir.omidashouri.springbatchone.tasklets.*;
+import lombok.AllArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.job.flow.JobExecutionDecider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@AllArgsConstructor
 @Configuration
 @EnableBatchProcessing
 public class JobConfiguration {
 
 
-    @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
-    @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
-    @Autowired
-    private HelloWorldTasklet hellowWorldTasklet;
+    private HelloWorldTasklet helloWorldTasklet;
 
-    @Autowired
     private PackageItemStepTasklet packageItemStepTasklet;
 
-    @Autowired
     private DriveToAddressTasklet driveToAddressTasklet;
 
-    @Autowired
     private GivePackageToCustomerTasklet givePackageToCustomerTasklet;
 
-    @Autowired
     private StorePackageTasklet storePackageTasklet;
 
-    @Autowired
     private LeaveAtDoorTasklet leaveAtDoorTasklet;
 
-    @Autowired
     private ThankCustomerTasklet thankCustomerTasklet;
 
-    @Autowired
     private GiveRefundTasklet giveRefundTasklet;
 
-    @Autowired
     private GiveToCustomerCorrectItemDecider giveToCustomer_CorrectItemDecider;
 
 
@@ -64,7 +54,7 @@ public class JobConfiguration {
     public Step helloWorldStep() {
         return stepBuilderFactory
                 .get("step1")
-                .tasklet(hellowWorldTasklet)
+                .tasklet(helloWorldTasklet)
                 .build();
     }
 
