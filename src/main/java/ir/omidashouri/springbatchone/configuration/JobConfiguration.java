@@ -1,6 +1,7 @@
 package ir.omidashouri.springbatchone.configuration;
 
 import ir.omidashouri.springbatchone.jobs.DeliveryDecider;
+import ir.omidashouri.springbatchone.jobs.GiveToCustomerCorrectItemDecider;
 import ir.omidashouri.springbatchone.tasklets.*;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -41,7 +42,14 @@ public class JobConfiguration {
     @Autowired
     private LeaveAtDoorTasklet leaveAtDoorTasklet;
 
+    @Autowired
+    private ThankCustomerTasklet thankCustomerTasklet;
 
+    @Autowired
+    private GiveRefundTasklet giveRefundTasklet;
+
+    @Autowired
+    private GiveToCustomerCorrectItemDecider giveToCustomer_CorrectItemDecider;
 
 
     @Bean
@@ -49,6 +57,8 @@ public class JobConfiguration {
         return new DeliveryDecider();
     }
 
+
+//    ---------------------------------------
 
     @Bean
     public Step step1() {
@@ -66,7 +76,27 @@ public class JobConfiguration {
                 .build();
     }
 
+
 //    ---------------------------------------
+
+    @Bean
+    public Step giveRefundStep(){
+        return this
+                .stepBuilderFactory
+                .get("giveRefundStep")
+                .tasklet(giveRefundTasklet)
+                .build();
+    }
+
+
+    @Bean
+    public Step thankCustomerStep(){
+        return this
+                .stepBuilderFactory
+                .get("thankCustomerStep")
+                .tasklet(thankCustomerTasklet)
+                .build();
+    }
 
     @Bean
     public Step leaveAtDoorStep(){
@@ -121,20 +151,38 @@ public class JobConfiguration {
     @Bean
     public Job deliveryPackageJob() {
         return this
-                .jobBuilderFactory
+            .jobBuilderFactory
                 .get("deliverPackageJob")
-                .start(packageItemStep())
+                    .start(packageItemStep())
 
-                .next(driveToAddressStep())
-                    .on("FAILED").to(storePackageStep())
-                .from(driveToAddressStep())
-                    .on("*").to(jobExecutionDeliveryDecider())
-                        .on("PRESENT").to(givePackageToCustomerStep())
-                    .from(jobExecutionDeliveryDecider())
-                        .on("NOT_PRESENT").to(leaveAtDoorStep())
-                .end()
+                        .next(driveToAddressStep())
+                            //driveToAddressStep: if failed ->
+                            .on("FAILED")
+                            .to(storePackageStep())
+                        .from(driveToAddressStep())
+                            //driveToAddressStep: if other status ->
+                            .on("*")
+                            .to(jobExecutionDeliveryDecider())
+                                //driveToAddressStep: other status: if PRESENT ->
+                                .on("PRESENT")
+                                .to(givePackageToCustomerStep())
 
-                .build();
+                                    .next(giveToCustomer_CorrectItemDecider)
+                                        //driveToAddressStep: other status: if PRESENT: Correct Item ->
+                                        .on("CORRECT_ITEM")
+                                        .to(thankCustomerStep())
+                                    .from(giveToCustomer_CorrectItemDecider)
+                                        //driveToAddressStep: other status: if PRESENT: Not Correct Item ->
+                                        .on("NOT_CORRECT")
+                                        .to(giveRefundStep())
+
+                            .from(jobExecutionDeliveryDecider())
+                            //driveToAddressStep: other status: if NOT PRESENT ->
+                                .on("NOT_PRESENT")
+                                .to(leaveAtDoorStep())
+
+                        .end()
+        .build();
     }
 
 }
