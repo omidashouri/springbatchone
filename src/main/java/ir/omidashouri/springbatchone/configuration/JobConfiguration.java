@@ -1,11 +1,16 @@
 package ir.omidashouri.springbatchone.configuration;
 
+import ir.omidashouri.springbatchone.executionListeners.FlowersSelectionStepExecutionListener;
 import ir.omidashouri.springbatchone.jobs.DeliveryDecider;
 import ir.omidashouri.springbatchone.jobs.GiveToCustomerCorrectItemDecider;
-import ir.omidashouri.springbatchone.tasklets.*;
+import ir.omidashouri.springbatchone.tasklets.deliveryPackageJob.*;
+import ir.omidashouri.springbatchone.tasklets.prepareFlowersJob.ArrangeFlowersTasklet;
+import ir.omidashouri.springbatchone.tasklets.prepareFlowersJob.RemoveThornsTasklet;
+import ir.omidashouri.springbatchone.tasklets.prepareFlowersJob.SelectFlowersTasklet;
 import lombok.AllArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -41,12 +46,24 @@ public class JobConfiguration {
 
     private GiveToCustomerCorrectItemDecider giveToCustomer_CorrectItemDecider;
 
-
     @Bean
-    public JobExecutionDecider jobExecutionDeliveryDecider(){
+    public JobExecutionDecider jobExecutionDeliveryDecider() {
         return new DeliveryDecider();
     }
 
+//    --- --- ---
+
+
+    private ArrangeFlowersTasklet arrangeFlowersTasklet;
+
+    private SelectFlowersTasklet selectflowersTasklet;
+
+    private RemoveThornsTasklet removeThornsTasklet;
+
+    @Bean
+    public StepExecutionListener flowersSelectionStepExecutionListener() {
+        return new FlowersSelectionStepExecutionListener();
+    }
 
 //    ---------------------------------------
 
@@ -70,7 +87,7 @@ public class JobConfiguration {
 //    ---------------------------------------
 
     @Bean
-    public Step giveRefundStep(){
+    public Step giveRefundStep() {
         return this
                 .stepBuilderFactory
                 .get("giveRefundStep")
@@ -80,7 +97,7 @@ public class JobConfiguration {
 
 
     @Bean
-    public Step thankCustomerStep(){
+    public Step thankCustomerStep() {
         return this
                 .stepBuilderFactory
                 .get("thankCustomerStep")
@@ -89,7 +106,7 @@ public class JobConfiguration {
     }
 
     @Bean
-    public Step leaveAtDoorStep(){
+    public Step leaveAtDoorStep() {
         return this
                 .stepBuilderFactory
                 .get("leaveAtDoorStep")
@@ -99,7 +116,7 @@ public class JobConfiguration {
 
 
     @Bean
-    public Step storePackageStep(){
+    public Step storePackageStep() {
         return this
                 .stepBuilderFactory
                 .get("storePackageStep")
@@ -109,7 +126,7 @@ public class JobConfiguration {
 
 
     @Bean
-    public Step givePackageToCustomerStep(){
+    public Step givePackageToCustomerStep() {
         return this
                 .stepBuilderFactory
                 .get("givePackageToCustomerStep")
@@ -119,7 +136,7 @@ public class JobConfiguration {
 
 
     @Bean
-    public Step driveToAddressStep(){
+    public Step driveToAddressStep() {
         return this
                 .stepBuilderFactory
                 .get("driveToAddressStep")
@@ -138,41 +155,93 @@ public class JobConfiguration {
     }
 
 
+//    ---------------------------------------
+
+
     @Bean
     public Job deliveryPackageJob() {
         return this
-            .jobBuilderFactory
+                .jobBuilderFactory
                 .get("deliverPackageJob")
-                    .start(packageItemStep())
+                .start(packageItemStep())
 
-                        .next(driveToAddressStep())
-                            //driveToAddressStep: if failed ->
-                            .on("FAILED")
-                            .to(storePackageStep())
-                        .from(driveToAddressStep())
-                            //driveToAddressStep: if other status ->
-                            .on("*")
-                            .to(jobExecutionDeliveryDecider())
-                                //driveToAddressStep: other status: if PRESENT ->
-                                .on("PRESENT")
-                                .to(givePackageToCustomerStep())
+                .next(driveToAddressStep())
+                //driveToAddressStep: if failed ->
+                .on("FAILED")
+                .to(storePackageStep())
+                .from(driveToAddressStep())
+                //driveToAddressStep: if other status ->
+                .on("*")
+                .to(jobExecutionDeliveryDecider())
+                //driveToAddressStep: other status: if PRESENT ->
+                .on("PRESENT")
+                .to(givePackageToCustomerStep())
 
-                                    .next(giveToCustomer_CorrectItemDecider)
-                                        //driveToAddressStep: other status: if PRESENT: Correct Item ->
-                                        .on("CORRECT_ITEM")
-                                        .to(thankCustomerStep())
-                                    .from(giveToCustomer_CorrectItemDecider)
-                                        //driveToAddressStep: other status: if PRESENT:  inCorrect Item ->
-                                        .on("INCORRECT_ITEM")
-                                        .to(giveRefundStep())
+                .next(giveToCustomer_CorrectItemDecider)
+                //driveToAddressStep: other status: if PRESENT: Correct Item ->
+                .on("CORRECT_ITEM")
+                .to(thankCustomerStep())
+                .from(giveToCustomer_CorrectItemDecider)
+                //driveToAddressStep: other status: if PRESENT:  inCorrect Item ->
+                .on("INCORRECT_ITEM")
+                .to(giveRefundStep())
 
-                            .from(jobExecutionDeliveryDecider())
-                            //driveToAddressStep: other status: if NOT PRESENT ->
-                                .on("NOT_PRESENT")
-                                .to(leaveAtDoorStep())
+                .from(jobExecutionDeliveryDecider())
+                //driveToAddressStep: other status: if NOT PRESENT ->
+                .on("NOT_PRESENT")
+                .to(leaveAtDoorStep())
 
-                        .end()
-        .build();
+                .end()
+                .build();
     }
+
+
+//    ---------------------------------------
+
+
+    @Bean
+    public Step removeThornsStep() {
+        return this
+                .stepBuilderFactory
+                .get("removeThornsStep")
+                .tasklet(removeThornsTasklet)
+                .build();
+    }
+
+    @Bean
+    public Step selectFlowersStep() {
+        return this
+                .stepBuilderFactory
+                .get("selectFlowersStep")
+                .tasklet(selectflowersTasklet)
+                .listener(flowersSelectionStepExecutionListener())
+                .build();
+    }
+
+    @Bean
+    public Step arrangeFlowersStep() {
+        return this
+                .stepBuilderFactory
+                .get("arrangeFlowersStep")
+                .tasklet(arrangeFlowersTasklet)
+                .build();
+    }
+
+    @Bean
+    public Job prepareFlowersJob() {
+        return this
+                .jobBuilderFactory
+                .get("prepareFlowersJob")
+                    .start(selectFlowersStep())
+                        .on("TRIM_REQUIRED")
+                            .to(removeThornsStep())
+                                .next(arrangeFlowersStep())
+                    .from(selectFlowersStep())
+                        .on("NO_TRIM_REQUIRED")
+                            .to(arrangeFlowersStep())
+                .end()
+                .build();
+    }
+
 
 }
