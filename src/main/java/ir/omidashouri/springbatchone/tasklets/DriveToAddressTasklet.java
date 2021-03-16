@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DriveToAddressTasklet implements Tasklet {
 
-    Boolean GOT_LOST = true;
+    Boolean GOT_LOST = false;
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
         if(GOT_LOST){

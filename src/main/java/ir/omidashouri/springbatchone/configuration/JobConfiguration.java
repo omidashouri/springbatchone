@@ -172,8 +172,8 @@ public class JobConfiguration {
                                         .on("CORRECT_ITEM")
                                         .to(thankCustomerStep())
                                     .from(giveToCustomer_CorrectItemDecider)
-                                        //driveToAddressStep: other status: if PRESENT: Not Correct Item ->
-                                        .on("NOT_CORRECT")
+                                        //driveToAddressStep: other status: if PRESENT:  inCorrect Item ->
+                                        .on("INCORRECT_ITEM")
                                         .to(giveRefundStep())
 
                             .from(jobExecutionDeliveryDecider())
