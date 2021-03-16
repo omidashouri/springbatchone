@@ -25,7 +25,7 @@ public class JobConfiguration {
     private StepBuilderFactory stepBuilderFactory;
 
     @Autowired
-    private Tasklet1 tasklet1;
+    private HelloWorldTasklet hellowWorldTasklet;
 
     @Autowired
     private PackageItemStepTasklet packageItemStepTasklet;
@@ -61,10 +61,10 @@ public class JobConfiguration {
 //    ---------------------------------------
 
     @Bean
-    public Step step1() {
+    public Step helloWorldStep() {
         return stepBuilderFactory
                 .get("step1")
-                .tasklet(tasklet1)
+                .tasklet(hellowWorldTasklet)
                 .build();
     }
 
@@ -72,7 +72,7 @@ public class JobConfiguration {
     public Job helloWorldJob() {
         return jobBuilderFactory
                 .get("helloWordJob")
-                .start(step1())
+                .start(helloWorldStep())
                 .build();
     }
 
