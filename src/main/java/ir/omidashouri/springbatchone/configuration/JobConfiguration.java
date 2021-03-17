@@ -21,6 +21,7 @@ import org.springframework.batch.core.job.flow.JobExecutionDecider;
 import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
 @AllArgsConstructor
 @Configuration
@@ -207,11 +208,10 @@ public class JobConfiguration {
                 .jobBuilderFactory
                 .get("deliverPackageJob")
                 .start(packageItemStep())
-                    .on("*")
-                    .to(deliveryFlow())
-                .next(nestedBillingJobStep())
-                .end()
-                .build();
+                .split(new SimpleAsyncTaskExecutor())
+                    .add(deliveryFlow(),billingFlow())
+        .end()
+        .build();
     }
 
 
@@ -273,6 +273,14 @@ public class JobConfiguration {
 
 
 //    ---------------------------------------
+
+
+    @Bean
+    public Flow billingFlow(){
+        return new FlowBuilder<SimpleFlow>("billingFlow")
+                .start(sendInvoiceStep())
+                .build();
+    }
 
 
     public Step nestedBillingJobStep(){
