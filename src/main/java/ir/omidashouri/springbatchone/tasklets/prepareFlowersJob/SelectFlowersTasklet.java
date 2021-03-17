@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class SelectFlowersTasklet implements Tasklet {
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-        System.out.println("Select flowers: Tasklet");
+        System.out.println(">>> @@@ Select flowers: Tasklet @@@ <<<");
         return RepeatStatus.FINISHED;
     }
 }

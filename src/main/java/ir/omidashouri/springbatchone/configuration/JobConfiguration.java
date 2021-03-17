@@ -14,7 +14,10 @@ import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.FlowBuilder;
+import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.batch.core.job.flow.JobExecutionDecider;
+import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -158,39 +161,49 @@ public class JobConfiguration {
 //    ---------------------------------------
 
 
+
+    public Flow deliveryFlow(){
+        return new FlowBuilder<SimpleFlow>("deliveryFlow")
+
+                .start(driveToAddressStep())
+                    //driveToAddressStep: if failed ->
+                    .on("FAILED")
+                    .to(storePackageStep())
+                .from(driveToAddressStep())
+                    //driveToAddressStep: if other status ->
+                    .on("*")
+                    .to(jobExecutionDeliveryDecider())
+                        //driveToAddressStep: other status: if PRESENT ->
+                        .on("PRESENT")
+                        .to(givePackageToCustomerStep())
+
+                        .next(giveToCustomer_CorrectItemDecider)
+                            //driveToAddressStep: other status: if PRESENT: Correct Item ->
+                            .on("CORRECT_ITEM")
+                            .to(thankCustomerStep())
+                        .from(giveToCustomer_CorrectItemDecider)
+                            //driveToAddressStep: other status: if PRESENT:  inCorrect Item ->
+                            .on("INCORRECT_ITEM")
+                            .to(giveRefundStep())
+
+                    .from(jobExecutionDeliveryDecider())
+                        //driveToAddressStep: other status: if NOT PRESENT ->
+                        .on("NOT_PRESENT")
+                        .to(leaveAtDoorStep())
+                .build();
+    }
+
+
+
+
     @Bean
     public Job deliveryPackageJob() {
         return this
                 .jobBuilderFactory
                 .get("deliverPackageJob")
                 .start(packageItemStep())
-
-                .next(driveToAddressStep())
-                //driveToAddressStep: if failed ->
-                .on("FAILED")
-                .to(storePackageStep())
-                .from(driveToAddressStep())
-                //driveToAddressStep: if other status ->
-                .on("*")
-                .to(jobExecutionDeliveryDecider())
-                //driveToAddressStep: other status: if PRESENT ->
-                .on("PRESENT")
-                .to(givePackageToCustomerStep())
-
-                .next(giveToCustomer_CorrectItemDecider)
-                //driveToAddressStep: other status: if PRESENT: Correct Item ->
-                .on("CORRECT_ITEM")
-                .to(thankCustomerStep())
-                .from(giveToCustomer_CorrectItemDecider)
-                //driveToAddressStep: other status: if PRESENT:  inCorrect Item ->
-                .on("INCORRECT_ITEM")
-                .to(giveRefundStep())
-
-                .from(jobExecutionDeliveryDecider())
-                //driveToAddressStep: other status: if NOT PRESENT ->
-                .on("NOT_PRESENT")
-                .to(leaveAtDoorStep())
-
+                    .on("*")
+                    .to(deliveryFlow())
                 .end()
                 .build();
     }
@@ -232,13 +245,19 @@ public class JobConfiguration {
         return this
                 .jobBuilderFactory
                 .get("prepareFlowersJob")
+
                     .start(selectFlowersStep())
                         .on("TRIM_REQUIRED")
-                            .to(removeThornsStep())
-                                .next(arrangeFlowersStep())
+                        .to(removeThornsStep())
+                            .next(arrangeFlowersStep())
                     .from(selectFlowersStep())
                         .on("NO_TRIM_REQUIRED")
-                            .to(arrangeFlowersStep())
+                        .to(arrangeFlowersStep())
+
+                    .from(arrangeFlowersStep())
+                        .on("*")
+                        .to(deliveryFlow())
+
                 .end()
                 .build();
     }
