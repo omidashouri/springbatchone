@@ -3,6 +3,7 @@ package ir.omidashouri.springbatchone.configuration;
 import ir.omidashouri.springbatchone.executionListeners.FlowersSelectionStepExecutionListener;
 import ir.omidashouri.springbatchone.jobs.DeliveryDecider;
 import ir.omidashouri.springbatchone.jobs.GiveToCustomerCorrectItemDecider;
+import ir.omidashouri.springbatchone.tasklets.billingJob.SendInvoiceTasklet;
 import ir.omidashouri.springbatchone.tasklets.deliveryPackageJob.*;
 import ir.omidashouri.springbatchone.tasklets.prepareFlowersJob.ArrangeFlowersTasklet;
 import ir.omidashouri.springbatchone.tasklets.prepareFlowersJob.RemoveThornsTasklet;
@@ -67,6 +68,10 @@ public class JobConfiguration {
     public StepExecutionListener flowersSelectionStepExecutionListener() {
         return new FlowersSelectionStepExecutionListener();
     }
+
+//    ---------------------------------------
+
+    private SendInvoiceTasklet sendInvoiceTasklet;
 
 //    ---------------------------------------
 
@@ -204,6 +209,7 @@ public class JobConfiguration {
                 .start(packageItemStep())
                     .on("*")
                     .to(deliveryFlow())
+                .next(nestedBillingJobStep())
                 .end()
                 .build();
     }
@@ -262,5 +268,38 @@ public class JobConfiguration {
                 .build();
     }
 
+
+
+
+
+//    ---------------------------------------
+
+
+    public Step nestedBillingJobStep(){
+        return this
+                .stepBuilderFactory
+                .get("nestedBillingJobStep")
+                .job(billingJob())
+                .build();
+    }
+
+
+    @Bean
+    public Step sendInvoiceStep(){
+        return this
+                .stepBuilderFactory
+                .get("invoiceStep")
+                .tasklet(sendInvoiceTasklet)
+                .build();
+    }
+
+    @Bean
+    public Job billingJob(){
+        return this
+                .jobBuilderFactory
+                .get("billingJob")
+                .start(sendInvoiceStep())
+                .build();
+    }
 
 }
