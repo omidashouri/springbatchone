@@ -23,9 +23,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
-@AllArgsConstructor
+/*@AllArgsConstructor
 @Configuration
-@EnableBatchProcessing
+@EnableBatchProcessing*/
 public class JobConfiguration {
 
 
