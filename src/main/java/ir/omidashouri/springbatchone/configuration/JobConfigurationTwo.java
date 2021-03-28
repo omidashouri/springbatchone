@@ -1,27 +1,21 @@
 package ir.omidashouri.springbatchone.configuration;
 
 
-import ir.omidashouri.springbatchone.entity.Order;
+import ir.omidashouri.springbatchone.entity.OrderItem;
 import ir.omidashouri.springbatchone.item.*;
 import lombok.AllArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.repository.JobRepository;
-import org.springframework.batch.core.repository.support.SimpleJobRepository;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.ResourceUtils;
@@ -54,20 +48,20 @@ public class JobConfigurationTwo {
     }
 
     @Bean
-    public ItemWriter<Order> chunkBasedItemWriterOrder(){
+    public ItemWriter<OrderItem> chunkBasedItemWriterOrder(){
         return new ChunkBasedItemWriterOrder();
     }
 
     @Bean
-    public ItemReader<Order> chunkBasedItemReaderOrder(){
+    public ItemReader<OrderItem> chunkBasedItemReaderOrder(){
         return new ChunkBasedItemReaderOrder();
     }
 
     @Bean
-    public ItemReader<Order> chunkBasedItemReaderOrder2(){
+    public ItemReader<OrderItem> chunkBasedItemReaderOrder2(){
 
-        FlatFileItemReader<Order> flatFileItemReader = new FlatFileItemReader();
-        DefaultLineMapper<Order> orderLineMapper = new DefaultLineMapper();
+        FlatFileItemReader<OrderItem> flatFileItemReader = new FlatFileItemReader();
+        DefaultLineMapper<OrderItem> orderLineMapper = new DefaultLineMapper();
         DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer();
         OrderFieldSetMapper orderFieldSetMapper = new OrderFieldSetMapper();
 
@@ -106,7 +100,7 @@ public class JobConfigurationTwo {
         return this
                 .stepBuilderFactory
                 .get("chunkBasedStepOrder")
-                .<Order,Order>chunk(5)
+                .<OrderItem, OrderItem>chunk(5)
                 .reader(chunkBasedItemReaderOrder2())
                 .writer(chunkBasedItemWriterOrder())
                 .build();

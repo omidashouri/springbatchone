@@ -18,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "TBL_ORDER",schema = "test")
-public class Order implements Serializable {
+public class OrderItem implements Serializable {
 
 
     @Id

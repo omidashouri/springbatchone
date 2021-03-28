@@ -1,23 +1,23 @@
 package ir.omidashouri.springbatchone.item;
 
-import ir.omidashouri.springbatchone.entity.Order;
+import ir.omidashouri.springbatchone.entity.OrderItem;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.validation.BindException;
 
-public class OrderFieldSetMapper implements FieldSetMapper<Order> {
+public class OrderFieldSetMapper implements FieldSetMapper<OrderItem> {
     @Override
-    public Order mapFieldSet(FieldSet fieldSet) throws BindException {
-        Order order = new Order();
-        order.setOrderId(fieldSet.readLong("order_id"));
-        order.setFirstName(fieldSet.readString("first_name"));
-        order.setLastName(fieldSet.readString("last_name"));
-        order.setEmail(fieldSet.readString("email"));
-        order.setCost(fieldSet.readFloat("cost"));
-        order.setItemId(fieldSet.readString("item_id"));
-        order.setItemName(fieldSet.readString("item_name"));
-        order.setShipDate(fieldSet.readDate("ship_date"));
-        return order;
+    public OrderItem mapFieldSet(FieldSet fieldSet) throws BindException {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrderId(fieldSet.readLong("order_id"));
+        orderItem.setFirstName(fieldSet.readString("first_name"));
+        orderItem.setLastName(fieldSet.readString("last_name"));
+        orderItem.setEmail(fieldSet.readString("email"));
+        orderItem.setCost(fieldSet.readFloat("cost"));
+        orderItem.setItemId(fieldSet.readString("item_id"));
+        orderItem.setItemName(fieldSet.readString("item_name"));
+        orderItem.setShipDate(fieldSet.readDate("ship_date"));
+        return orderItem;
     }
 }
 

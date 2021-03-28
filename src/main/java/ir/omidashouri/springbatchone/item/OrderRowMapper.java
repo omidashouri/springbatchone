@@ -1,26 +1,26 @@
 package ir.omidashouri.springbatchone.item;
 
-import ir.omidashouri.springbatchone.entity.Order;
+import ir.omidashouri.springbatchone.entity.OrderItem;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class OrderRowMapper implements RowMapper<Order> {
+public class OrderRowMapper implements RowMapper<OrderItem> {
 
 
     @Override
-    public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Order order = new Order();
-        order.setOrderId(rs.getLong("order_id"));
-        order.setFirstName(rs.getString("first_name"));
-        order.setLastName(rs.getString("last_name"));
-        order.setEmail(rs.getString("email"));
-        order.setCost(rs.getFloat("cost"));
-        order.setItemId(rs.getString("item_id"));
-        order.setItemName(rs.getString("item_name"));
-        order.setShipDate(rs.getDate("ship_date"));
-        return order;
+    public OrderItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrderId(rs.getLong("order_id"));
+        orderItem.setFirstName(rs.getString("first_name"));
+        orderItem.setLastName(rs.getString("last_name"));
+        orderItem.setEmail(rs.getString("email"));
+        orderItem.setCost(rs.getFloat("cost"));
+        orderItem.setItemId(rs.getString("item_id"));
+        orderItem.setItemName(rs.getString("item_name"));
+        orderItem.setShipDate(rs.getDate("ship_date"));
+        return orderItem;
     }
 }

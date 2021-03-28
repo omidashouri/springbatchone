@@ -4,14 +4,17 @@ package ir.omidashouri.springbatchone.configuration;
 import ir.omidashouri.springbatchone.entity.OrderItem;
 import ir.omidashouri.springbatchone.item.ChunkBasedItemWriterOrder;
 import ir.omidashouri.springbatchone.item.OrderRowMapper;
+import ir.omidashouri.springbatchone.item.JdbcPagingQueryProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
+import org.springframework.batch.item.database.PagingQueryProvider;
+import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,8 +23,8 @@ import javax.sql.DataSource;
 
 @AllArgsConstructor
 @Configuration
-//@EnableBatchProcessing
-public class JobConfigurationThree {
+@EnableBatchProcessing
+public class JobConfigurationFour {
 
 
     public JobBuilderFactory jobBuilderFactory;
@@ -33,42 +36,48 @@ public class JobConfigurationThree {
 
 
     @Bean
-    public ItemWriter<OrderItem> chunkBasedItemWriterOrderJdbc(){
+    public ItemWriter<OrderItem> chunkBasedItemWriterOrderJdbcPaging(){
         return new ChunkBasedItemWriterOrder();
     }
 
     @Bean
-    public RowMapper<OrderItem> orderRowMapper(){
+    public RowMapper<OrderItem> orderRowMapperPaging(){
         return new OrderRowMapper();
     }
 
     @Bean
-    public ItemReader<OrderItem> jdbcItemReader(){
-        return new JdbcCursorItemReaderBuilder<OrderItem>()
+    public PagingQueryProvider queryProviderPaging(){
+            return new JdbcPagingQueryProvider().getPagingQueryProvider(dataSource);
+    }
+
+    @Bean
+    public ItemReader<OrderItem> jdbcItemReaderPaging(){
+        return new JdbcPagingItemReaderBuilder<OrderItem>()
                 .dataSource(dataSource)
                 .name("jdbcCursorItemReader")
-                .sql(ORDER_SQL)
-                .rowMapper(orderRowMapper())
+                .queryProvider(queryProviderPaging())
+                .rowMapper(orderRowMapperPaging())
+                .pageSize(10) //equal to chunk size
                 .build();
     }
 
     @Bean
-    public Step chunkBasedStepOrderJdbc(){
+    public Step chunkBasedStepOrderJdbcPaging(){
         return this
                 .stepBuilderFactory
-                .get("chunkBasedStepOrderJdbc")
-                .<OrderItem, OrderItem>chunk(6)
-                .reader(jdbcItemReader())
-                .writer(chunkBasedItemWriterOrderJdbc())
+                .get("chunkBasedStepOrderJdbcPaging")
+                .<OrderItem, OrderItem>chunk(10)
+                .reader(jdbcItemReaderPaging())
+                .writer(chunkBasedItemWriterOrderJdbcPaging())
                 .build();
     }
 
     @Bean
-    public Job jobOrderJdbc(){
+    public Job jobOrderJdbcPaging(){
         return this
                 .jobBuilderFactory
-                .get("job-chunk-Order-JDBC")
-                .start(chunkBasedStepOrderJdbc())
+                .get("job-chunk-Order-JDBC-Paging")
+                .start(chunkBasedStepOrderJdbcPaging())
                 .build();
     }
 
