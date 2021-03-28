@@ -32,7 +32,7 @@ import java.io.FileNotFoundException;
 
 @AllArgsConstructor
 @Configuration
-@EnableBatchProcessing
+//@EnableBatchProcessing
 public class JobConfigurationTwo {
 
 
