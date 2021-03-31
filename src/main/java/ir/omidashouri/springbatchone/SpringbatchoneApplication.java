@@ -1,9 +1,6 @@
 package ir.omidashouri.springbatchone;
 
-import ir.omidashouri.springbatchone.configuration.JobConfiguration;
-import ir.omidashouri.springbatchone.multithread.StaticClass;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
+import ir.omidashouri.springbatchone.multithread.SyncExample;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -17,12 +14,17 @@ public class SpringbatchoneApplication {
         SpringApplication.run(SpringbatchoneApplication.class, args);
 
 
-        StaticClass.execute1();
-//        StaticClass.execute2();
-//        StaticClass.execute3();
-        StaticClass.execute4();
-//        StaticClass.execute5();
-        
+//        RunnerExample.execute1();
+//        RunnerExample.execute2();
+//        RunnerExample.execute3();
+//        RunnerExample.execute4();
+//        RunnerExample.execute5();
+
+        SyncExample.processASynchrony();
+//        SyncExample.processSynchrony();
+//        for run processSynchrony2 first comment processSynchrony
+        SyncExample.processSynchrony2();
+
     }
 
 

@@ -1,6 +1,6 @@
 package ir.omidashouri.springbatchone.multithread;
 
-public class StaticClass {
+public class RunnerExample {
 
 
 
@@ -84,4 +84,6 @@ public class StaticClass {
 
         System.out.println("+++ +++ +++");
     }
+
+
 }
