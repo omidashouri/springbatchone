@@ -31,8 +31,9 @@ public class SpringbatchoneApplication {
 
 //        LockLoopExample.execute7LockLoop();
 
-        WorkerExample.execute8Worker();
+//        WorkerExample.execute8Worker();
 
+        WorkerVolatileExecute.execute10WorkerVolatile();
 
     }
 

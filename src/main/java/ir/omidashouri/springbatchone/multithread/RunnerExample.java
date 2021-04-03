@@ -3,8 +3,7 @@ package ir.omidashouri.springbatchone.multithread;
 public class RunnerExample {
 
 
-
-    public static void execute1(){
+    public static void execute1() {
         System.out.println("### Execute 1 ### ");
 
         new Runner1().run();
@@ -13,7 +12,7 @@ public class RunnerExample {
         System.out.println("+++ +++ +++");
     }
 
-    public static void execute2(){
+    public static void execute2() {
         System.out.println("### Execute 2 ### ");
 
         Thread t1 = new Thread(new Runner1());
@@ -25,7 +24,7 @@ public class RunnerExample {
         System.out.println("+++ +++ +++");
     }
 
-    public static void execute3(){
+    public static void execute3() {
         System.out.println("### Execute 3 ### ");
 
         Thread t3 = new Runner3();
@@ -38,13 +37,13 @@ public class RunnerExample {
         System.out.println("+++ +++ +++");
     }
 
-    public static void execute4(){
+    public static void execute4() {
         System.out.println("### Execute 4 ### ");
 
         Thread t5 = new Runner3();
-        System.out.println("current thread name is: "+ Thread.currentThread().getName());
+        System.out.println("current thread name is: " + Thread.currentThread().getName());
         Thread t6 = new Runner4();
-        System.out.println("current thread name is: "+ Thread.currentThread().getName());
+        System.out.println("current thread name is: " + Thread.currentThread().getName());
 
 
         t5.start();
@@ -60,16 +59,17 @@ public class RunnerExample {
         System.out.println("+++ +++ +++");
     }
 
-    public static void execute5(){
+    public static void execute5() {
         System.out.println("### Execute 5 ### ");
 
-        Thread t7 = new Thread(new InfiniteLoop());
+        InfiniteLoop infiniteLoop = new InfiniteLoop();
+        Thread t7 = new Thread(infiniteLoop);
         t7.setName("daemonThread");
         t7.setDaemon(true);
-        System.out.println("current thread name is: "+ Thread.currentThread().getName());
+        System.out.println("current thread name is: " + Thread.currentThread().getName());
         Thread t8 = new Thread(new Runner1());
         t8.setName("normalThread");
-        System.out.println("current thread name is: "+ Thread.currentThread().getName());
+        System.out.println("current thread name is: " + Thread.currentThread().getName());
 
 
         t7.start();
@@ -77,7 +77,7 @@ public class RunnerExample {
 
         try {
             t8.join();
-            t7.stop();
+            infiniteLoop.setTerminated(true);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

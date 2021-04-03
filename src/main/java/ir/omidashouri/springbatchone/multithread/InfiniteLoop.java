@@ -1,11 +1,17 @@
 package ir.omidashouri.springbatchone.multithread;
 
-public class InfiniteLoop implements Runnable{
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class InfiniteLoop implements Runnable {
+    private volatile boolean terminated;
 
     @Override
     public void run() {
-        System.out.println("current thread name is: "+ Thread.currentThread().getName());
-        while (true){
+        System.out.println("current thread name is: " + Thread.currentThread().getName());
+        while (!terminated) {
             System.out.println("Infinite Loop Running .... ");
         }
     }
