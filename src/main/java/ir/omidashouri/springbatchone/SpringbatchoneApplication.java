@@ -1,6 +1,6 @@
 package ir.omidashouri.springbatchone;
 
-import ir.omidashouri.springbatchone.multithread.SyncExample;
+import ir.omidashouri.springbatchone.multithread.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -20,10 +20,19 @@ public class SpringbatchoneApplication {
 //        RunnerExample.execute4();
 //        RunnerExample.execute5();
 
-        SyncExample.processASynchrony();
+//        SyncExample.processASynchrony();
 //        SyncExample.processSynchrony();
 //        for run processSynchrony2 first comment processSynchrony
-        SyncExample.processSynchrony2();
+//        SyncExample.processSynchrony2();
+
+//        ProcessExample.execute6Process();
+
+//        ProcessorExample.execute7Processor();
+
+//        LockLoopExample.execute7LockLoop();
+
+        WorkerExample.execute8Worker();
+
 
     }
 
