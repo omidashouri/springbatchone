@@ -33,7 +33,9 @@ public class SpringbatchoneApplication {
 
 //        WorkerExample.execute8Worker();
 
-        WorkerVolatileExecute.execute10WorkerVolatile();
+//        WorkerVolatileExecute.execute10WorkerVolatile();
+
+        SemaphoreDownloadExecutor.download();
 
     }
 
