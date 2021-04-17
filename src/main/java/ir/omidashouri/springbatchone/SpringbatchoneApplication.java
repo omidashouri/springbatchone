@@ -9,7 +9,7 @@ public class SpringbatchoneApplication {
 
     public static void main(String[] args) {
 
-        System.out.println("current thread name is: "+ Thread.currentThread().getName());
+        System.out.println("current thread name is: " + Thread.currentThread().getName());
 
         SpringApplication.run(SpringbatchoneApplication.class, args);
 
@@ -35,10 +35,14 @@ public class SpringbatchoneApplication {
 
 //        WorkerVolatileExecute.execute10WorkerVolatile();
 
-        SemaphoreDownloadExecutor.download();
+//        SemaphoreDownloadExecutor.download();
 
+//        DeadLock.executeDeadLock();
+
+//        LiveLock.executeLiveLock();
+
+        new AtomicIntegerExample().executeAtomicInteger();
     }
-
 
 
 }
