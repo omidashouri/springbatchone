@@ -228,3 +228,45 @@ Delete from spring_batch.BATCH_JOB_INSTANCE;
 
 
 -------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+--- . --- . --- . --- . --- . --- . --- . --- . --- . ---
+
+Notes:
+
+SEMAPHORE:
+    -it is a signalling mechanism
+    -threads and processes perform wait() and notify() operations to indicate whether they are acquiring or releasing the resource.
+    -semaphore allows multiple program threads to access the finite instance of resources(not just a single resource)
+    -the process or thread blocks itself if no resource is free till the count of semaphore become greater than 0 
+
+MUTEX:
+    -mutex is a locking mechanism
+    -threads or processes have to acquire the lock on mutex object if wants to acquire the resource
+    -mutex allows multiple program threads to access a single shared resource but one at a time.
+    -if the lock is already acquired by another thread or process then the thread will wait until the mutex object gets unlocked
+
+
+Runnable and Callable Interface:
+-Runnable: a so called run-and-forget action. we execute a given operation in run() method without a return value.
+
+-Callable<T>: we use Callable interface's call() method if we want to return a given value from the given thread
+    -Callable interface will not return value: this is why we  need Future<T> object.
+    -calling thread will be blocked till the call() method is executed and Future<T> return the results
+
+-The ExecutorService can handle both of the interfaces (Runnable and Callable interfaces)
+    -executorService.execute():
+        -this method executes a Runnable interface, 
+         so it means there is no return value (void run() method)
+    -executorService.submit():
+        -this method can handle Runnable interfaces as well as Callable interfaces
+            -it can handle a Future<T> return value and we can get the T value with get() on the future object.
+
+-

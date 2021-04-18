@@ -41,7 +41,15 @@ public class SpringbatchoneApplication {
 
 //        LiveLock.executeLiveLock();
 
-        new AtomicIntegerExample().executeAtomicInteger();
+//        new AtomicIntegerExample().executeAtomicInteger();
+
+//        new Task_52Executor().singleThreadExecutor();
+
+//        new Task_52Executor().fixedThreadPool();
+
+//        new StockMarketUpdater_54().scheduledThreadPool();
+
+        new Task_52Executor().fixedThreadPoolShutDown();
     }
 
 
