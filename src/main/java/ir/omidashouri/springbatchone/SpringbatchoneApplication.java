@@ -49,7 +49,9 @@ public class SpringbatchoneApplication {
 
 //        new StockMarketUpdater_54().scheduledThreadPool();
 
-        new Task_52Executor().fixedThreadPoolShutDown();
+//        new Task_52Executor().fixedThreadPoolShutDown();
+
+        new Processor_57Executor().execute();
     }
 
 
