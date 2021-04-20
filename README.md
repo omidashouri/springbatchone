@@ -289,4 +289,9 @@ Runnable and Callable Interface:
     -New CyclicBarrier(N) -> N threads will wait for each other
     -we can not reuse latches but we can reuse cyclicBarrier -> react()
 
--
+-BlockingQueue:
+    -BlockingQueue -> an interface that represents a queue that is thread safe put items or take item from it.
+        -for example: one thread putting item into the queue and another thread taking items from it at the same time.
+            -we can do it with producer-consumer pattern
+    -put() putting items to the queue
+    -take() taking items from the queue
