@@ -51,7 +51,10 @@ public class SpringbatchoneApplication {
 
 //        new Task_52Executor().fixedThreadPoolShutDown();
 
-        new Processor_57Executor().execute();
+//        new Processor_57Executor().execute();
+
+        new LatchWorker71Execute().execute();
+
     }
 
 

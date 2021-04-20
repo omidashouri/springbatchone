@@ -269,4 +269,11 @@ Runnable and Callable Interface:
         -this method can handle Runnable interfaces as well as Callable interfaces
             -it can handle a Future<T> return value and we can get the T value with get() on the future object.
 
--
+-Latch: 
+    -this is used to synchronize one or more tasks by forcing them to wait for the completion of a set of operation 
+     being performed by other tasks.
+    -you give an initial to a CountDownLatch object, and any task that calls await() on that object will block until 
+     the count reaches zero.
+    -the tasks that call countDown() are not blocked when they make that call. only the call to await() is blocked
+     until the count reaches zero.
+    -
