@@ -53,8 +53,9 @@ public class SpringbatchoneApplication {
 
 //        new Processor_57Executor().execute();
 
-        new LatchWorker71Execute().execute();
+//        new LatchWorker71Execute().execute();
 
+        new CyclicBarrier72Execute().execute();
     }
 
 

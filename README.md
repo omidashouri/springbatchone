@@ -276,4 +276,17 @@ Runnable and Callable Interface:
      the count reaches zero.
     -the tasks that call countDown() are not blocked when they make that call. only the call to await() is blocked
      until the count reaches zero.
-    -
+
+-Cyclic barrier:
+    -Latch -> multiple threads can wait for each other
+    -a cyclic barrier is used in a situation where you wait to create a group of tasks to perform work in parallel 
+     plus wait until they are all finished before moving on to the next step
+        -something like join()
+        -something like CountDownLatch
+        -CountDownLatch: one-shot event, it reaches zero it is over
+        -CyclicBarrier: it can be reused over and over again
+            +cyclicBarrier has a barrier action: a runnable, that will run automatically when the count reaches 0
+    -New CyclicBarrier(N) -> N threads will wait for each other
+    -we can not reuse latches but we can reuse cyclicBarrier -> react()
+
+-
