@@ -64,7 +64,9 @@ public class SpringbatchoneApplication {
 
 //        new PriorityQueueExecute75().execute();
 
-        new ConcurrentMapExecute76().execute();
+//        new ConcurrentMapExecute76().execute();
+
+        new ExchangerThreadExecute77().execute();
     }
 
 

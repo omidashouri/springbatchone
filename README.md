@@ -317,4 +317,9 @@ Runnable and Callable Interface:
 
 
 -Concurrent map:
-    -
+
+
+-Exchanger:
+    -with help of exchanger two thread can exchange objects
+    -exchange() -> exchanging objects is done via one of two exchange()
+    -for example: a genetic algorithm, training neural networks 
