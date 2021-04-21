@@ -307,4 +307,10 @@ Runnable and Callable Interface:
     -size() return the count of both expired and unexpired items
 
 
--
+-Priority Queue:
+    -it implements the BlockingQueue interface
+    -unbound concurrent queue
+    -it uses the same ordering rules as the java.util.PriorityQueue class -> have to implement the comparable interface
+        -the comparable interface will determine what will the order in the queue
+        -the priority can be the same compare() === 0 case
+    -no null item
