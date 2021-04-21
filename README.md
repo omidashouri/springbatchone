@@ -314,3 +314,7 @@ Runnable and Callable Interface:
         -the comparable interface will determine what will the order in the queue
         -the priority can be the same compare() === 0 case
     -no null item
+
+
+-Concurrent map:
+    -

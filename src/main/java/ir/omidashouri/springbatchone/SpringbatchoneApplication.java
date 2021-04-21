@@ -62,7 +62,9 @@ public class SpringbatchoneApplication {
 
 //        new DelayWorkerExecute74().execute();
 
-        new PriorityQueueExecute75().execute();
+//        new PriorityQueueExecute75().execute();
+
+        new ConcurrentMapExecute76().execute();
     }
 
 
