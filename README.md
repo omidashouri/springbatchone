@@ -295,3 +295,16 @@ Runnable and Callable Interface:
             -we can do it with producer-consumer pattern
     -put() putting items to the queue
     -take() taking items from the queue
+
+
+-Delay Queue:
+    -this is an unbounded blockingqueue of objects that implement the Delayed interface
+    -DelayQueue keeps the elements internally until a certain delay has expired
+    -an object can only be taken from the queue when its delay has expired
+    -we cannot place null items in the queue - the queue is sorted so that
+     the object at the head has a delay that has expired for longest time.
+    -if no delay has expired, then there is no head element and poll() will return null
+    -size() return the count of both expired and unexpired items
+
+
+-
