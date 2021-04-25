@@ -323,3 +323,23 @@ Runnable and Callable Interface:
     -with help of exchanger two thread can exchange objects
     -exchange() -> exchanging objects is done via one of two exchange()
     -for example: a genetic algorithm, training neural networks 
+
+
+-Dining Philosopher:
+    -Problem:
+        -it was formulated by Dijkstra in 1965
+        -5 philosophers are present at a table and there are 5 forks (chopsticks)
+        -the philosophers can eat and drink
+        -philosophers can eat when they have both left and left chopsticks
+        -a chopstick can be hold by one philosopher at a given time
+        -the problem: how to create a concurrent algorithm such that no philosopher will starve?
+         (so the aim is to avoid deadlocks)
+    -How to handle deadlock and livelock:
+        1.we should make sure that a thread does not block infinitely if it is unable to acquire a lock.
+            ->this is why using Lock interface's tryLock() method is extremely convenient and useful
+        2.we should make sure that each thread acquires the locks 
+          in the same order to avoid any cyclic dependency in lock acquisition.
+        3.livelock can be handled with the methods above and some randomness ~ threads retry acquiring the locks at random intervals.
+
+
+-

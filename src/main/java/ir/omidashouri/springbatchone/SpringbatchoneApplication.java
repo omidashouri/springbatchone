@@ -1,6 +1,7 @@
 package ir.omidashouri.springbatchone;
 
 import ir.omidashouri.springbatchone.multithread.*;
+import ir.omidashouri.springbatchone.multithread.diningPhilosophers.ExecuteDiningPhilosopher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -58,15 +59,21 @@ public class SpringbatchoneApplication {
 //        new CyclicBarrier72Execute().execute();
 
 //        new BlockingQueueExecute73().execute();
-
-
+        
 //        new DelayWorkerExecute74().execute();
 
 //        new PriorityQueueExecute75().execute();
 
 //        new ConcurrentMapExecute76().execute();
 
-        new ExchangerThreadExecute77().execute();
+//        new ExchangerThreadExecute77().execute();
+
+
+        try {
+            new ExecuteDiningPhilosopher().execute();
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+        }
     }
 
 
