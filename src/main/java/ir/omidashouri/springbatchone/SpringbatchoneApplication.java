@@ -2,6 +2,7 @@ package ir.omidashouri.springbatchone;
 
 import ir.omidashouri.springbatchone.multithread.*;
 import ir.omidashouri.springbatchone.multithread.diningPhilosophers.ExecuteDiningPhilosopher;
+import ir.omidashouri.springbatchone.multithread.studentLibrary.ExecuteStudentLibrary;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -69,11 +70,16 @@ public class SpringbatchoneApplication {
 //        new ExchangerThreadExecute77().execute();
 
 
-        try {
+/*        try {
             new ExecuteDiningPhilosopher().execute();
         } catch (InterruptedException interruptedException) {
             interruptedException.printStackTrace();
-        }
+        }*/
+
+
+
+        new ExecuteStudentLibrary().execute();
+
     }
 
 
