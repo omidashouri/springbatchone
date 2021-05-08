@@ -1,8 +1,6 @@
 package ir.omidashouri.springbatchone;
 
-import ir.omidashouri.springbatchone.multithread.*;
-import ir.omidashouri.springbatchone.multithread.diningPhilosophers.ExecuteDiningPhilosopher;
-import ir.omidashouri.springbatchone.multithread.studentLibrary.ExecuteStudentLibrary;
+import ir.omidashouri.springbatchone.multithread.threadEssentials.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -76,9 +74,17 @@ public class SpringbatchoneApplication {
             interruptedException.printStackTrace();
         }*/
 
+//        new ExecuteStudentLibrary().execute();
+
+//        new My1MultiThread().execute();
+
+//        new My2ExecutorService().execute();
+
+//        new My3ParallelSort().execute();
 
 
-        new ExecuteStudentLibrary().execute();
+        new My4CounterExecutor().execute();
+
 
     }
 
