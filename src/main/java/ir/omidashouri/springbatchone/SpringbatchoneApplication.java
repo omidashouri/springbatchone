@@ -1,5 +1,6 @@
 package ir.omidashouri.springbatchone;
 
+import ir.omidashouri.springbatchone.multithread.sumExample.SumExample;
 import ir.omidashouri.springbatchone.multithread.threadEssentials.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -87,6 +88,7 @@ public class SpringbatchoneApplication {
 //        new My4CounterExecutor().execute();
 
 
+        new SumExample().execute();
 
 
     }
