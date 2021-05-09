@@ -13,6 +13,7 @@ public class SpringbatchoneApplication {
 
         SpringApplication.run(SpringbatchoneApplication.class, args);
 
+        System.out.println("Number of threads: "+Runtime.getRuntime().availableProcessors());
 
 //        RunnerExample.execute1();
 //        RunnerExample.execute2();
@@ -83,7 +84,9 @@ public class SpringbatchoneApplication {
 //        new My3ParallelSort().execute();
 
 
-        new My4CounterExecutor().execute();
+//        new My4CounterExecutor().execute();
+
+
 
 
     }
