@@ -1,5 +1,6 @@
 package ir.omidashouri.springbatchone;
 
+import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.ExecuteUsers;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.runnables.A1;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.runnables.B1;
 import org.springframework.boot.SpringApplication;
@@ -94,7 +95,10 @@ public class SpringbatchoneApplication {
 //        new A1().execute();
 
 
-        new B1().execute();
+//        new B1().execute();
+
+
+
     }
 
 
