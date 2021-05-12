@@ -3,9 +3,6 @@ package ir.omidashouri.springbatchone.multithread.javaEEConcurrency.runnables;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.beans.UserEntity;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.service.UserService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -27,15 +24,12 @@ public class C1 implements Callable<Long> {
         StringTokenizer stringTokenizer = new StringTokenizer(userRecord, ",");
         List<UserEntity> users = new ArrayList<>();
         UserEntity user;
-        Long id=1L;
         while (stringTokenizer.hasMoreTokens()) {
             user = new UserEntity();
             user.setEmailAddress(stringTokenizer.nextToken());
             user.setName(stringTokenizer.nextToken());
-            user.setIdd(Integer.valueOf(stringTokenizer.nextToken()));
-            user.setId(id);
+            user.setMyId(Long.valueOf(stringTokenizer.nextToken()));
             userService.saveUser(user);
-            id++;
         }
         return userService.countUsers();
     }
