@@ -23,12 +23,12 @@ import java.util.concurrent.Future;
 
 @Component
 @AllArgsConstructor
-public class ExecuteUsers {
+public class ExecuteC1 {
 
     private final UserService userService;
 
     public void execute() {
-        ExecutorService executors = Executors.newSingleThreadExecutor();
+        ExecutorService executors = Executors.newCachedThreadPool();
         List<String> stringUsers = getUsersFromFile("javaeeconcurencyfiles/newusers.txt");
         for (String s : stringUsers) {
             Future<Long> longFuture = executors.submit(new C1(userService ,s));

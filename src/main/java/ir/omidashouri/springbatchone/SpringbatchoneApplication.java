@@ -1,8 +1,5 @@
 package ir.omidashouri.springbatchone;
 
-import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.ExecuteUsers;
-import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.runnables.A1;
-import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.runnables.B1;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

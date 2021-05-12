@@ -1,8 +1,10 @@
 package ir.omidashouri.springbatchone.multithread.javaEEConcurrency.controller;
 
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.beans.TestModel;
-import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.ExecuteUsers;
-import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.runnables.C1;
+import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.ExecuteC1;
+import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.ExecuteD1;
+import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.ExecuteE1;
+import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.ExecuteTestThreadFactoryF1;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,10 @@ import java.util.Map;
 @AllArgsConstructor
 public class UserController {
 
-    private final ExecuteUsers executeUsers;
+    private final ExecuteC1 executeC1;
+    private final ExecuteD1 executeD1;
+    private final ExecuteE1 executeE1;
+    private final ExecuteTestThreadFactoryF1 executeTestThreadFactoryF1;
 
 
 //    http://localhost:8080/c1
@@ -29,7 +34,12 @@ public class UserController {
     public void concurrent(@RequestParam(name="name", required=false, defaultValue="World") String name,
                       Map<String,Object> model) {
 
-        executeUsers.execute();
+//        executeC1.execute();
+//        executeD1.execute();
+//        executeE1.execute();
+        executeTestThreadFactoryF1.execute();
+
+
     }
 
 
