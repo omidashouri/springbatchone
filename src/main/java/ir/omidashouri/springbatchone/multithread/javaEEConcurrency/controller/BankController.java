@@ -2,15 +2,13 @@ package ir.omidashouri.springbatchone.multithread.javaEEConcurrency.controller;
 
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.beans.BankAccountEntity;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.beans.BankAccountTransactionEntity;
-import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.runnables.F1ReportsProcessor;
+import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.runnables.F1BankReportsProcessor;
+import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.runnables.G1BankSchedule;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.service.BankAccountService;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.service.BankAccountTransactionService;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.utility.ExportReportView;
-import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.utility.ThreadConfiguration;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 @Controller
 @RequestMapping("/bank")
@@ -33,6 +28,9 @@ public class BankController {
     private final BankAccountService bankAccountService;
     private final BankAccountTransactionService bankAccountTransactionService;
     private final ExecutorService executorServiceFixed3ThreadPool;
+
+    private final G1BankSchedule g1BankSchedule;
+    private final ScheduledExecutorService executorServiceSingleThreadScheduledExecutor;
 
     //    http://localhost:8080/b
     @GetMapping("")
@@ -54,7 +52,7 @@ public class BankController {
 
         for (BankAccountEntity bankAccount : bankAccounts) {
             Future<List<Long>> futures = executorServiceFixed3ThreadPool
-                    .submit(new F1ReportsProcessor(bankAccount, bankAccountTransactionService));
+                    .submit(new F1BankReportsProcessor(bankAccount, bankAccountTransactionService));
             bankAccountTransactionIdz.addAll(futures.get());
         }
 
@@ -62,6 +60,18 @@ public class BankController {
 
 
         return new ModelAndView(exportReportView, "bankAccountTransactionList", bankAccountTransactions);
+    }
+
+
+
+//    http://localhost:8080/bank/schedule
+    @GetMapping("/schedule")
+    public ModelAndView schedule() throws ExecutionException, InterruptedException {
+
+        executorServiceSingleThreadScheduledExecutor
+                .scheduleAtFixedRate(g1BankSchedule,1,3,TimeUnit.SECONDS);
+        System.out.println(">>>>>>>>> ");
+        return new ModelAndView("bank");
     }
 
 }

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class F1ReportsProcessor implements Callable<List<Long>> {
+public class F1BankReportsProcessor implements Callable<List<Long>> {
 
     private final BankAccountEntity bankAccountZ;
     private final BankAccountTransactionService bankAccountTransactionService;

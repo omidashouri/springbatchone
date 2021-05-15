@@ -5,8 +5,8 @@ import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.beans.BankAcc
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.*;
 
 @Configuration
 public class ThreadConfiguration {
@@ -22,8 +22,15 @@ public class ThreadConfiguration {
         return Executors.newCachedThreadPool();
     }
 
+
+    @Bean
+    public ScheduledExecutorService executorServiceSingleThreadScheduledExecutor(){
+      return Executors.newSingleThreadScheduledExecutor();
+    }
+
     @Bean
     public BankAccountEntity bankAccountz(){
         return new BankAccountEntity();
     }
+
 }
