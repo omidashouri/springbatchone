@@ -350,3 +350,30 @@ INSERT INTO test.tbl_user_con (email,myid,name) VALUES("o.ashouri@imi.ir", 1, "o
 
 
 --------------------------------------------------
+
+
+-- test.TBL_BANK_ACCOUNT
+
+CREATE TABLE test.TBL_BANK_ACCOUNT (
+id bigint(20) NOT NULL AUTO_INCREMENT,
+ACC_NUMBER int DEFAULT NULL,
+NAME varchar(255) DEFAULT NULL,
+EMAIL varchar(255) DEFAULT NULL,
+ACC_TYPE varchar(255) DEFAULT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE test.TBL_BANK_ACCOUNT_TRANSACTION (
+id bigint(20) NOT NULL AUTO_INCREMENT,
+ACC_NUMBER double DEFAULT NULL,
+AMOUNT double DEFAULT NULL,
+TX_DATE date DEFAULT NULL,
+TX_ID int DEFAULT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+----------------------------------------------------------
