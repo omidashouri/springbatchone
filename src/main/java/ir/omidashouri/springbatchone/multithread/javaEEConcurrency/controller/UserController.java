@@ -5,6 +5,8 @@ import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.Execu
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.ExecuteD1;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.ExecuteE1;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.execute.ExecuteTestThreadFactoryF1;
+import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.repository.UserRepository;
+import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.service.UserServiceA;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ public class UserController {
     private final ExecuteD1 executeD1;
     private final ExecuteE1 executeE1;
     private final ExecuteTestThreadFactoryF1 executeTestThreadFactoryF1;
+
+    private final UserRepository userRepository;
+    private final UserServiceA userServiceA;
 
 
 //    http://localhost:8080/c1
@@ -39,6 +44,8 @@ public class UserController {
 //        executeE1.execute();
         executeTestThreadFactoryF1.execute();
 
+        userServiceA.setUserRepository(userRepository);
+        System.out.println(" USER SERVICE COUNT: >>>>>>>>.. "+userServiceA.countUsers());
 
     }
 

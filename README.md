@@ -342,4 +342,11 @@ Runnable and Callable Interface:
         3.livelock can be handled with the methods above and some randomness ~ threads retry acquiring the locks at random intervals.
 
 
--
+-------------------------------------------------
+
+
+INSERT INTO test.tbl_user_con (email,myid,name) VALUES("o.ashouri@imi.ir", 1, "omid ashouri");
+
+
+
+--------------------------------------------------
