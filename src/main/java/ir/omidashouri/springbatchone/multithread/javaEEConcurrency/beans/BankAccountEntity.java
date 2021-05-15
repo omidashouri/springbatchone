@@ -16,11 +16,11 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "TBL_BANK_ACCOUNT",schema = "test")
+@Table(name = "tbl_bank_account",schema = "test")
 public class BankAccountEntity implements Serializable {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

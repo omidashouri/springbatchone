@@ -27,6 +27,7 @@ public class F1ReportsProcessor implements Callable<List<Long>> {
 
     @Override
     public List<Long> call() throws Exception {
+        System.out.println("Thread Name: "+Thread.currentThread().getName());
         Integer accountNumber = bankAccountZ.getAccNumber();
         List<Long> accountTransactionIdz = new ArrayList<>();
 

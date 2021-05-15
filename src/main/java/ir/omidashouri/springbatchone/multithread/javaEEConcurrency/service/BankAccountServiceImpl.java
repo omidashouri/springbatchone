@@ -17,7 +17,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public List<BankAccountEntity> getAllBankAccounts() {
         List<BankAccountEntity> bankAccounts = new ArrayList<>();
-        bankAccountRepository.findAll().forEach(bankAccounts::add);
+        bankAccounts = bankAccountRepository.findAll();
         return bankAccounts;
     }
 }

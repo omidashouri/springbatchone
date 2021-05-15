@@ -15,12 +15,12 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "TBL_BANK_ACCOUNT_TRANSACTION",schema = "test")
+@Table(name = "tbl_bank_account_transaction",schema = "test")
 public class BankAccountTransactionEntity implements Serializable {
-
+//tbl_bank_account_transaction
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

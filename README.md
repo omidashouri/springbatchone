@@ -354,7 +354,7 @@ INSERT INTO test.tbl_user_con (email,myid,name) VALUES("o.ashouri@imi.ir", 1, "o
 
 -- test.TBL_BANK_ACCOUNT
 
-CREATE TABLE test.TBL_BANK_ACCOUNT (
+CREATE TABLE test.tbl_bank_account (
 id bigint(20) NOT NULL AUTO_INCREMENT,
 ACC_NUMBER int DEFAULT NULL,
 NAME varchar(255) DEFAULT NULL,
@@ -364,7 +364,7 @@ PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE test.TBL_BANK_ACCOUNT_TRANSACTION (
+CREATE TABLE test.tbl_bank_account_transaction (
 id bigint(20) NOT NULL AUTO_INCREMENT,
 ACC_NUMBER double DEFAULT NULL,
 AMOUNT double DEFAULT NULL,
@@ -373,6 +373,37 @@ TX_ID int DEFAULT NULL,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+INSERT INTO test.tbl_bank_account (ACC_NUMBER, NAME, EMAIL, ACC_TYPE) VALUES(1 , 'omidashouri', 'omidashouri@gamil.com', 'normal');
+INSERT INTO test.tbl_bank_account (ACC_NUMBER, NAME, EMAIL, ACC_TYPE) VALUES(2 , 'omidashouri', 'omidashouri@gamil.com', 'normal');
+INSERT INTO test.tbl_bank_account (ACC_NUMBER, NAME, EMAIL, ACC_TYPE) VALUES(3 , 'omidashouri', 'omidashouri@gamil.com', 'normal');
+INSERT INTO test.tbl_bank_account (ACC_NUMBER, NAME, EMAIL, ACC_TYPE) VALUES(4 , 'omidashouri', 'omidashouri@gamil.com', 'normal');
+INSERT INTO test.tbl_bank_account (ACC_NUMBER, NAME, EMAIL, ACC_TYPE) VALUES(5 , 'omidashouri', 'omidashouri@gamil.com', 'normal');
+INSERT INTO test.tbl_bank_account (ACC_NUMBER, NAME, EMAIL, ACC_TYPE) VALUES(6 , 'omidashouri', 'omidashouri@gamil.com', 'normal');
+INSERT INTO test.tbl_bank_account (ACC_NUMBER, NAME, EMAIL, ACC_TYPE) VALUES(7 , 'omidashouri', 'omidashouri@gamil.com', 'normal');
+INSERT INTO test.tbl_bank_account (ACC_NUMBER, NAME, EMAIL, ACC_TYPE) VALUES(8 , 'omidashouri', 'omidashouri@gamil.com', 'normal');
+INSERT INTO test.tbl_bank_account (ACC_NUMBER, NAME, EMAIL, ACC_TYPE) VALUES(9 , 'omidashouri', 'omidashouri@gamil.com', 'normal');
+INSERT INTO test.tbl_bank_account (ACC_NUMBER, NAME, EMAIL, ACC_TYPE) VALUES(10 , 'omidashouri', 'omidashouri@gamil.com', 'normal');
+
+
+
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(1, 100, '2021-03-11', 1);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(1, 100, '2021-03-11', 1);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(1, 100, '2021-03-11', 1);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(1, 100, '2021-03-11', 1);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(1, 100, '2021-03-11', 1);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(2, 100, '2021-03-11', 2);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(2, 100, '2021-03-11', 2);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(2, 100, '2021-03-11', 2);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(2, 100, '2021-03-11', 2);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(2, 100, '2021-03-11', 2);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(3, 100, '2021-03-11', 3);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(3, 100, '2021-03-11', 3);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(3, 100, '2021-03-11', 3);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(3, 100, '2021-03-11', 3);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(3, 100, '2021-03-11', 3);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(4, 100, '2021-03-11', 4);
+INSERT INTO test.tbl_bank_account_transaction (ACC_NUMBER, AMOUNT, TX_DATE, TX_ID) VALUES(4, 100, '2021-03-11', 4);
 
 
 
