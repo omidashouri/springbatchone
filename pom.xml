@@ -74,6 +74,12 @@
             <artifactId>poi</artifactId>
             <version>5.0.0</version>
         </dependency>
+
+<!--        XA transaction-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jta-atomikos</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
