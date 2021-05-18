@@ -1,7 +1,6 @@
 package ir.omidashouri.springbatchone.multithread.javaEEConcurrency.controller;
 
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.beans.ShippedOrderEntity;
-import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.futures.ShippedOrderFuture;
 import ir.omidashouri.springbatchone.multithread.javaEEConcurrency.service.ShippedOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Supplier;
 
 @Controller
 @RequestMapping("/shippedOrder")
@@ -25,20 +22,20 @@ import java.util.function.Supplier;
 public class ShippedOrderController {
 
     private final ShippedOrderService shippedOrderService;
-    private final ShippedOrderFuture shippedOrderFuture;
 
     //    http://localhost:8080/shippedOrder/all
     @GetMapping("/allThread")
     public ModelAndView getAllThread() throws ExecutionException, InterruptedException {
-        ExecutorService executorService = Executors.newFixedThreadPool(4);
 
         Instant begin = Instant.now();
         System.out.println("Begin Time >>> " + begin);
 
-        List<ShippedOrderEntity> shippedOrders = shippedOrderFuture.getAll();
+
 
         Instant end = Instant.now();
         System.out.println("End Time >>> " + end);
+
+        List<ShippedOrderEntity> shippedOrders = shippedOrderService.getAllThread();
 
         System.out.println("Duration >>> " + Duration.between(begin, end).toMillis());
 
