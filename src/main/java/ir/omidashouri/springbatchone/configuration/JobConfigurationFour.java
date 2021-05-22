@@ -3,12 +3,11 @@ package ir.omidashouri.springbatchone.configuration;
 
 import ir.omidashouri.springbatchone.entity.OrderItem;
 import ir.omidashouri.springbatchone.item.ChunkBasedItemWriterOrder;
-import ir.omidashouri.springbatchone.item.OrderRowMapper;
 import ir.omidashouri.springbatchone.item.JdbcPagingQueryProvider;
+import ir.omidashouri.springbatchone.item.OrderRowMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
@@ -23,7 +22,7 @@ import javax.sql.DataSource;
 
 @AllArgsConstructor
 @Configuration
-@EnableBatchProcessing
+//@EnableBatchProcessing
 public class JobConfigurationFour {
 
 
